@@ -1,0 +1,10 @@
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBotCore.csprojAssemblyReference.cache
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormMain.resources
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBotCore.csproj.GenerateResource.cache
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBotCore.csproj.CoreCompileInputs.cache
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\bin\Debug\PaintBotCore.dll
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\bin\Debug\PaintBotCore.pdb
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBotCore.dll
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBotCore.pdb
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.Components.PlayerConfigPanel.resources
+D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormConfig.resources
