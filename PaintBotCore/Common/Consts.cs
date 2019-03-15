@@ -18,5 +18,10 @@ namespace PaintBot.Core.Common
 		/// ボール投げアクションで同じ場所を塗った場合に設定される色コード
 		/// </remarks>
 		public static readonly string COLORCODE_BLACK = "000000";
+
+		/// <summary>
+		/// マップファイル名
+		/// </summary>
+		public static readonly string MAP_FILE = "map.dat";
 	}
 }

@@ -55,6 +55,7 @@
 			// 
 			// comboBoxBotName
 			// 
+			this.comboBoxBotName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxBotName.FormattingEnabled = true;
 			this.comboBoxBotName.Location = new System.Drawing.Point(156, 32);
 			this.comboBoxBotName.Name = "comboBoxBotName";

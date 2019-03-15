@@ -8,3 +8,13 @@ D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintB
 D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBotCore.pdb
 D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.Components.PlayerConfigPanel.resources
 D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormConfig.resources
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\bin\Debug\PaintBotCore.dll
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\bin\Debug\PaintBotCore.pdb
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csprojAssemblyReference.cache
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.Components.PlayerConfigPanel.resources
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormConfig.resources
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormMain.resources
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csproj.GenerateResource.cache
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csproj.CoreCompileInputs.cache
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.dll
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.pdb

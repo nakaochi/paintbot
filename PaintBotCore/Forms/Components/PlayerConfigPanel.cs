@@ -20,12 +20,34 @@ namespace PaintBot.Core.Forms.Components
 		/// <summary>
 		/// プレイヤー色
 		/// </summary>
-		private Color PlayerColor { set; get; } = Color.White;
+		[DefaultValue(typeof(System.Drawing.Color), "White")]
+		public Color PlayerColor {
+			set {
+				panelColor.BackColor = value;
+			}
+			get {
+				return panelColor.BackColor;
+			}
+		}
 
 		/// <summary>
 		/// 色の変更を可能とするか
 		/// </summary>
 		public bool CanChangeColor { set; get; } = false;
+
+		/// <summary>
+		/// パネル番号
+		/// </summary>
+		public string PanelNumber {
+			set
+			{
+				labelNumber.Text = value;
+			}
+			get
+			{
+				return labelNumber.Text;
+			}
+		}
 
 		/// <summary>
 		/// Botメタ情報のリスト
@@ -40,9 +62,6 @@ namespace PaintBot.Core.Forms.Components
 		{
 			// コンポーネントを初期化
 			InitializeComponent();
-
-			// パネルの背景色を初期化
-			panelColor.BackColor = PlayerColor;
 		}
 
 		/// <summary>
@@ -52,16 +71,20 @@ namespace PaintBot.Core.Forms.Components
 		public void InitBotList(List<BotMeta> metaList)
 		{
 			Assert.IsNotNull(metaList, nameof(metaList));
+			Assert.IsTrue(metaList.Count > 0, "metaList.Count > 0");
 
 			// 保持
-			this.botMetaList = new List<BotMeta>(metaList);
-			// ソート
-			this.botMetaList.Sort((a, b) => a.BotId.CompareTo(b.BotId));
+			this.botMetaList = metaList;
+			//// ソート
+			//this.botMetaList.Sort((a, b) => a.BotId.CompareTo(b.BotId));
 
 			// クリア
 			comboBoxBotName.Items.Clear();
 			// ComboBox に Item 追加
 			botMetaList.ForEach(m => comboBoxBotName.Items.Add(new ComboBoxItemBot(m)));
+
+			// 先頭を選択状態
+			comboBoxBotName.SelectedIndex = 0;
 		}
 
 		/// <summary>

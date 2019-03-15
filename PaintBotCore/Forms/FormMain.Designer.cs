@@ -116,7 +116,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.Name = "FormMain";
-			this.Text = "+";
+			this.Text = "Paint Bot";
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);

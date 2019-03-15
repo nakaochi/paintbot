@@ -23,6 +23,25 @@ namespace PaintBot.Core.Utils
 		/// <returns>Bot IDと Bot クラスタイプ のマップ</returns>
 		public static List<BotMeta> ScanBots(Assembly asm = null)
 		{
+			// 戻り値
+			var ret = new List<BotMeta>();
+
+			// 指定のアセンブリを読み込む
+			ret.AddRange(ScanBotsInternal(asm));
+			// PaintBotCoreアセンブリを読み込む
+			ret.AddRange(ScanBotsInternal(Assembly.GetExecutingAssembly()));
+
+			// 結果を返す
+			return ret;
+		}
+
+		/// <summary>
+		/// アセンブリから Bot クラスをスキャンする
+		/// </summary>
+		/// <param name="asm">捜査対象のアセンブリ（指定しない場合はプログラムエントリーのアセンブリ）</param>
+		/// <returns>Bot IDと Bot クラスタイプ のマップ</returns>
+		private static List<BotMeta> ScanBotsInternal(Assembly asm = null)
+		{
 			try
 			{
 				Debug.WriteLine("スキャン開始");

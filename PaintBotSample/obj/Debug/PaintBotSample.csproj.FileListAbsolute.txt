@@ -7,3 +7,13 @@ D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotSample\obj\Debug\Pain
 D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotSample\obj\Debug\PaintBotSample.csproj.CopyComplete
 D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotSample\obj\Debug\PaintBotSample.exe
 D:\Users\D00127\VisualStudio\source\repos\PaintBot\PaintBotSample\obj\Debug\PaintBotSample.pdb
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\bin\Debug\PaintBotSample.exe
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\bin\Debug\PaintBotSample.pdb
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\bin\Debug\PaintBotCore.dll
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\bin\Debug\PaintBotCore.pdb
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\obj\Debug\PaintBotSample.csprojAssemblyReference.cache
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\obj\Debug\PaintBotSample.csproj.CoreCompileInputs.cache
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\obj\Debug\PaintBotSample.csproj.CopyComplete
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\obj\Debug\PaintBotSample.exe
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\obj\Debug\PaintBotSample.pdb
+C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotSample\bin\Debug\map.dat

@@ -59,7 +59,9 @@
     <Folder Include="Bots\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="map.dat" />
+    <None Include="map.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
