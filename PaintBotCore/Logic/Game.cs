@@ -19,12 +19,12 @@ namespace PaintBot.Core.Logic
 		/// <summary>
 		/// プレイヤーリスト
 		/// </summary>
-		private List<Player> Players { set; get; }
+		public List<Player> Players { private set; get; }
 
 		/// <summary>
 		/// マップデータ
 		/// </summary>
-		private Map Map { set; get; }
+		public Map Map { private set; get; }
 
 		/// <summary>
 		/// Bot メタ情報のリスト
@@ -34,7 +34,7 @@ namespace PaintBot.Core.Logic
 		/// <summary>
 		/// 現在バトル中のロボットのリスト
 		/// </summary>
-		private List<Bot> Bots { set; get; }
+		public List<Bot> Bots { private set; get; }
 
 		/// <summary>
 		/// ゲームステータス

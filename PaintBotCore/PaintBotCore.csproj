@@ -71,6 +71,7 @@
     <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utils\ImageUtil.cs" />
     <Compile Include="Logic\Game.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Player.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Utils\AssertException.cs" />
     <Compile Include="Utils\BotAttribute.cs" />
     <Compile Include="Utils\GameLoader.cs" />
+    <Compile Include="Utils\IntUtil.cs" />
     <Compile Include="Utils\Rand.cs" />
     <Compile Include="Utils\UserException.cs" />
   </ItemGroup>

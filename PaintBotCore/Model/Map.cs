@@ -241,6 +241,17 @@ namespace PaintBot.Core.Model
 		}
 
 		/// <summary>
+		/// 指定位置を指定の色を取得する
+		/// </summary>
+		/// <param name="x">X座標</param>
+		/// <param name="y">Y座標</param>
+		/// <returns>色コード</returns>
+		public string GetCellColor(int x, int y)
+		{
+			return PaintedCellList[ConvertIndex(x, y)];
+		}
+
+		/// <summary>
 		/// 指定位置に Bot がいるかどうか判定する
 		/// </summary>
 		/// <param name="pos">位置</param>

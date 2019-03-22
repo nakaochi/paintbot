@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PaintBotCore",
+    "\\PaintBotSample"
   ],
   "PreviewInSolutionExplorer": false
 }
