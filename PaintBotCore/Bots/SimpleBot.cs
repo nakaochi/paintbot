@@ -33,7 +33,7 @@ namespace PaintBot.Core.Bots
 			var hereCellType = map[pos];
 
 			// 通常床で自分色じゃない場合
-			if (hereCellType == ECellType.FLOOR && ColorCode != map.GetCellColor(pos))
+			if (hereCellType == ECellType.FLOOR && ColorCode != map.GetColorCode(pos))
 			{
 				return PaintHere();
 			}
@@ -65,7 +65,7 @@ namespace PaintBot.Core.Bots
 				}
 
 				// 隣の色
-				var sideColor = map.GetCellColor(sidePos);
+				var sideColor = map.GetColorCode(sidePos);
 
 				// 隣の色が自分の色と異なる場合
 				if (sideColor != ColorCode)

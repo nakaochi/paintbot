@@ -50,6 +50,7 @@
     <Compile Include="Common\ECellType.cs" />
     <Compile Include="Common\EEventType.cs" />
     <Compile Include="Common\EGameStatus.cs" />
+    <Compile Include="Common\EPlayerType.cs" />
     <Compile Include="Common\GameEvent.cs" />
     <Compile Include="Common\Position.cs" />
     <Compile Include="Common\BotAction.cs" />

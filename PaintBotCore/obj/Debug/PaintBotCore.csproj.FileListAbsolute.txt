@@ -18,3 +18,13 @@ C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCo
 C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csproj.CoreCompileInputs.cache
 C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.dll
 C:\Users\D00127\Source\Repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.pdb
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csprojAssemblyReference.cache
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.Components.PlayerConfigPanel.resources
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormConfig.resources
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBot.Core.Forms.FormMain.resources
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csproj.GenerateResource.cache
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.csproj.CoreCompileInputs.cache
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.dll
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\obj\Debug\PaintBotCore.pdb
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\bin\Debug\PaintBotCore.dll
+D:\Users\D00127\source\repos\nakaochi\paintbot\PaintBotCore\bin\Debug\PaintBotCore.pdb

@@ -52,6 +52,11 @@ namespace PaintBot.Core.Logic
 		public int MaxTurnCount { private set; get; }
 
 		/// <summary>
+		/// プレイヤータイプのマップ
+		/// </summary>
+		private Dictionary<Player, EPlayerType> _playerTypeMap = new Dictionary<Player, EPlayerType>();
+
+		/// <summary>
 		/// ゲームイベントの delegate 型
 		/// </summary>
 		/// <param name="e">ゲームイベント</param>
@@ -89,18 +94,12 @@ namespace PaintBot.Core.Logic
 
 			// 準備中
 			Status = EGameStatus.PREPARING;
-		}
 
-		/// <summary>
-		/// ゲームを開始する
-		/// </summary>
-		/// <param name="maxTurnCount">最大ターン数</param>
-		public void StartGame(int maxTurnCount)
-		{
-			// プレイ中の場合
-			if (Status == EGameStatus.PLAYING)
+			// プレイヤー種別のマップ化
+			for (int i = 0; i < players.Count; i++)
 			{
-				throw new AppException("プレイ中なので、開始できません");
+				var player = players[i];
+				_playerTypeMap[player] = (EPlayerType)Enum.ToObject(typeof(EPlayerType), (int)EPlayerType.PLAYER1 + i);
 			}
 
 			// Bot のリストを初期化
@@ -122,6 +121,19 @@ namespace PaintBot.Core.Logic
 
 			// マップを初期化
 			Map.Init(Bots);
+		}
+
+		/// <summary>
+		/// ゲームを開始する
+		/// </summary>
+		/// <param name="maxTurnCount">最大ターン数</param>
+		public void StartGame(int maxTurnCount)
+		{
+			// プレイ中の場合
+			if (Status == EGameStatus.PLAYING)
+			{
+				throw new AppException("プレイ中なので、開始できません");
+			}
 
 			// ターン数を初期化
 			TurnCount = 0;
@@ -344,12 +356,14 @@ namespace PaintBot.Core.Logic
 						return;
 					}
 
-					// 色コード
+					// プレイヤー区分
+					var playerType = GetPlayerType(bot);
 					var colorCode = bot.ColorCode;
 
 					// すでにこのターンでボールを投げている場合
 					if (thrownPosList.Contains(throwPos))
 					{
+						playerType = EPlayerType.NO_PLAYER;
 						colorCode = Consts.COLORCODE_BLACK;
 
 						// イベント通知
@@ -365,7 +379,8 @@ namespace PaintBot.Core.Logic
 					}
 
 					// 指定の位置を塗る
-					Map.SetCellColor(throwPos, colorCode);
+					Map.SetOwnerPlayerType(throwPos, playerType);
+					Map.SetColorCode(throwPos, colorCode);
 				});
 		}
 
@@ -385,6 +400,7 @@ namespace PaintBot.Core.Logic
 					var bot = a.Bot;
 					// Bot の位置
 					var botPos = Map.GetBotPosition(bot);
+
 					// 色コード
 					var colorCode = bot.ColorCode;
 					
@@ -392,7 +408,8 @@ namespace PaintBot.Core.Logic
 					if (Map[botPos] == ECellType.FLOOR)
 					{
 						// 指定の位置を塗る
-						Map.SetCellColor(botPos, colorCode);
+						Map.SetOwnerPlayerType(botPos, GetPlayerType(bot));
+						Map.SetColorCode(botPos, colorCode);
 
 						// イベント通知
 						NoticeEvent(EEventType.PAINTED_HERE, bot, botPos);
@@ -414,6 +431,20 @@ namespace PaintBot.Core.Logic
 			// ステータスを終了
 			Status = EGameStatus.FINISHED;
 		}
+
+		/// <summary>
+		/// プレイヤー区分を取得する
+		/// </summary>
+		/// <param name="player">プレイヤー</param>
+		/// <returns>プレイヤー区分</returns>
+		public EPlayerType GetPlayerType(Player player) => _playerTypeMap[player];
+
+		/// <summary>
+		/// プレイヤー区分を取得する
+		/// </summary>
+		/// <param name="bot">Bot</param>
+		/// <returns>プレイヤー区分</returns>
+		public EPlayerType GetPlayerType(Bot bot) => _playerTypeMap[bot.Player];
 
 		/// <summary>
 		/// BotId から Bot インスタンスを生成する

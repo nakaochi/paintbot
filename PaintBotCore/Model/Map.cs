@@ -34,9 +34,14 @@ namespace PaintBot.Core.Model
 		private List<ECellType> CellList { set; get; }
 
 		/// <summary>
-		/// セル色のリスト
+		/// 各セルの所有プレイヤーのリスト
 		/// </summary>
-		private List<string> PaintedCellList { set; get; }
+		private List<EPlayerType> OwnerPlayerList { set; get; }
+
+		/// <summary>
+		/// 各セルの色コードのリスト
+		/// </summary>
+		private List<string> CellColorList { set; get; }
 
 		/// <summary>
 		/// Bot と位置のマップ
@@ -133,6 +138,18 @@ namespace PaintBot.Core.Model
 			Width = baseMap.Width;
 			Height = baseMap.Height;
 			CellList = new List<ECellType>(baseMap.CellList);
+
+			// 初期化
+			OwnerPlayerList = new List<EPlayerType>();
+			CellColorList = new List<string>();
+			BotPosMap = new Dictionary<Bot, Position>();
+			// 
+			var cellCount = Width * Height;
+			cellCount.Times(i =>
+			{
+				OwnerPlayerList.Add(EPlayerType.NO_PLAYER);
+				CellColorList.Add(Consts.COLORCODE_BLACK);
+			});
 		}
 
 		/// <summary>
@@ -221,34 +238,65 @@ namespace PaintBot.Core.Model
 		}
 
 		/// <summary>
-		/// 指定位置を指定の色を設定する
+		/// 指定位置の所有プレイヤーを設定する
+		/// </summary>
+		/// <param name="pos">位置</param>
+		/// <param name="playerType">プレイヤー区分</param>
+		public void SetOwnerPlayerType(Position pos, EPlayerType playerType)
+		{
+			OwnerPlayerList[ConvertIndex(pos)] = playerType;
+		}
+
+		/// <summary>
+		/// 指定位置の所有プレイヤーを取得する
+		/// </summary>
+		/// <param name="pos">位置</param>
+		/// <returns>プレイヤー区分</returns>
+		public EPlayerType GetOwnerPlayerType(Position pos)
+		{
+			return OwnerPlayerList[ConvertIndex(pos)];
+		}
+
+		/// <summary>
+		/// 指定位置の所有プレイヤーを取得する
+		/// </summary>
+		/// <param name="x">X座標</param>
+		/// <param name="y">Y座標</param>
+		/// <returns>プレイヤー区分</returns>
+		public EPlayerType GetOwnerPlayerType(int x, int y)
+		{
+			return OwnerPlayerList[ConvertIndex(x, y)];
+		}
+
+		/// <summary>
+		/// 指定位置の色コードを取得する
 		/// </summary>
 		/// <param name="pos">位置</param>
 		/// <param name="colorCode">色コード</param>
-		public void SetCellColor(Position pos, string colorCode)
+		public void SetColorCode(Position pos, string colorCode)
 		{
-			PaintedCellList[ConvertIndex(pos)] = colorCode;
+			CellColorList[ConvertIndex(pos)] = colorCode;
 		}
 
 		/// <summary>
-		/// 指定位置を指定の色を取得する
+		/// 指定位置の色コードを取得する
 		/// </summary>
 		/// <param name="pos">位置</param>
 		/// <returns>色コード</returns>
-		public string GetCellColor(Position pos)
+		public string GetColorCode(Position pos)
 		{
-			return PaintedCellList[ConvertIndex(pos)];
+			return CellColorList[ConvertIndex(pos)];
 		}
 
 		/// <summary>
-		/// 指定位置を指定の色を取得する
+		/// 指定位置の色コードを取得する
 		/// </summary>
 		/// <param name="x">X座標</param>
 		/// <param name="y">Y座標</param>
 		/// <returns>色コード</returns>
-		public string GetCellColor(int x, int y)
+		public string GetColorCode(int x, int y)
 		{
-			return PaintedCellList[ConvertIndex(x, y)];
+			return CellColorList[ConvertIndex(x, y)];
 		}
 
 		/// <summary>
