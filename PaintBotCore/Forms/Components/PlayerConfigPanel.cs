@@ -94,7 +94,7 @@ namespace PaintBot.Core.Forms.Components
 		public Player GetPlayer()
 		{
 			// コンボボックスのアイテムを取得
-			var comboItem = comboBoxBotName.SelectedValue as ComboBoxItemBot;
+			var comboItem = comboBoxBotName.Items[comboBoxBotName.SelectedIndex] as ComboBoxItemBot;
 
 			// 入力された情報を取得する
 			var playerName = textBoxName.Text;
@@ -104,6 +104,7 @@ namespace PaintBot.Core.Forms.Components
 			// 無効なデータの場合
 			if (string.IsNullOrEmpty(playerName) || botId == null)
 			{
+				//throw new UserException($"Invalid Data：playerName={playerName}, botId={botId}");
 				return null;
 			}
 

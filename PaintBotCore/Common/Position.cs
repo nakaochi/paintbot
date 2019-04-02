@@ -63,5 +63,11 @@ namespace PaintBot.Core.Common
 		{
 			return Y << 16 + X;
 		}
+
+		// 文字列化
+		public override string ToString()
+		{
+			return $"({X}, {Y})";
+		}
 	}
 }

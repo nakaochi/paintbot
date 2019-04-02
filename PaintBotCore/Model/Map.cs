@@ -103,7 +103,7 @@ namespace PaintBot.Core.Model
 		/// </summary>
 		/// <param name="index">インデックス</param>
 		/// <returns>位置</returns>
-		private Position ConvertPosition(int index) => new Position(index / Width, index % Width);
+		private Position ConvertPosition(int index) => new Position(index % Width, index / Width);
 
 		/// <summary>
 		/// マップを生成する
@@ -124,6 +124,18 @@ namespace PaintBot.Core.Model
 			Width = width;
 			Height = height;
 			CellList = new List<ECellType>(cellList);
+
+			OwnerPlayerList = new List<EPlayerType>();
+			CellColorList = new List<string>();
+			BotPosMap = new Dictionary<Bot, Position>();
+
+			// 
+			var cellCount = Width * Height;
+			cellCount.Times(i =>
+			{
+				OwnerPlayerList.Add(EPlayerType.NO_PLAYER);
+				CellColorList.Add(Consts.COLORCODE_BLACK);
+			});
 		}
 
 		/// <summary>
@@ -140,16 +152,9 @@ namespace PaintBot.Core.Model
 			CellList = new List<ECellType>(baseMap.CellList);
 
 			// 初期化
-			OwnerPlayerList = new List<EPlayerType>();
-			CellColorList = new List<string>();
-			BotPosMap = new Dictionary<Bot, Position>();
-			// 
-			var cellCount = Width * Height;
-			cellCount.Times(i =>
-			{
-				OwnerPlayerList.Add(EPlayerType.NO_PLAYER);
-				CellColorList.Add(Consts.COLORCODE_BLACK);
-			});
+			OwnerPlayerList = new List<EPlayerType>(baseMap.OwnerPlayerList);
+			CellColorList = new List<string>(baseMap.CellColorList);
+			BotPosMap = new Dictionary<Bot, Position>(baseMap.BotPosMap);
 		}
 
 		/// <summary>

@@ -67,6 +67,11 @@ namespace PaintBot.Core.Forms
 		/// </summary>
 		private Game _game = null;
 
+		/// <summary>
+		/// フレームカウント
+		/// </summary>
+		private long _frameCount = 0;
+
 
 		/// <summary>
 		/// フォームステータスの列挙型
@@ -144,8 +149,17 @@ namespace PaintBot.Core.Forms
 			// ストップウォッチを生成
 			_stopwatch = new Stopwatch();
 
+			// バックスクリーンがあれば
+			if (_backScr != null)
+			{
+				// 破棄
+				_backScr.Dispose();
+			}
 			// バックスクリーンを生成
 			_backScr = new Bitmap(pictureBox.Width, pictureBox.Height);
+
+			// フレームカウントを０にリセット
+			_frameCount = 0;
 
 			// ボットクラスを読み込む
 			_botMetaList = GameLoader.ScanBots();
@@ -172,7 +186,7 @@ namespace PaintBot.Core.Forms
 			{
 				// 色に変換
 				var colorValue = int.Parse(colorCode, System.Globalization.NumberStyles.AllowHexSpecifier);
-				var color = Color.FromArgb(colorValue);
+				var color = Color.FromArgb(255, colorValue >> 16 & 0xff, colorValue >> 8 & 0xff, colorValue & 0xff);
 				// 登録
 				_colorMap[colorCode] = color;
 			}
@@ -197,21 +211,6 @@ namespace PaintBot.Core.Forms
 			var color4 = players.Count > 3 ? ConvColorCode(players[3].ColorCode) : Color.FromArgb(200, 200, 200);
 
 			// セルイメージを生成
-			//_cellImageMap[ECellImage.FLOOR_NONE]	= ImageUtil.CreateRectCellImage(CellSize, Color.White, 2, Color.Black);
-			//_cellImageMap[ECellImage.FLOOR_1]		= ImageUtil.CreateRectCellImage(CellSize, color1, 2, Color.Black);
-			//_cellImageMap[ECellImage.FLOOR_2]		= ImageUtil.CreateRectCellImage(CellSize, color2, 2, Color.Black);
-			//_cellImageMap[ECellImage.FLOOR_3]		= ImageUtil.CreateRectCellImage(CellSize, color3, 2, Color.Black);
-			//_cellImageMap[ECellImage.FLOOR_4]		= ImageUtil.CreateRectCellImage(CellSize, color4, 2, Color.Black);
-			//_cellImageMap[ECellImage.START_1]		= ImageUtil.CreateMeshRectCellImage(CellSize, color1, 2, Color.Black);
-			//_cellImageMap[ECellImage.START_2]		= ImageUtil.CreateMeshRectCellImage(CellSize, color2, 2, Color.Black);
-			//_cellImageMap[ECellImage.START_3]		= ImageUtil.CreateMeshRectCellImage(CellSize, color3, 2, Color.Black);
-			//_cellImageMap[ECellImage.START_4]		= ImageUtil.CreateMeshRectCellImage(CellSize, color4, 2, Color.Black);
-			//_cellImageMap[ECellImage.WALL]			= ImageUtil.CreateRectCellImage(CellSize, Color.DarkGray, 2, Color.Black);
-			//_cellImageMap[ECellImage.WIRE_MESH]		= ImageUtil.CreateMeshRectCellImage(CellSize, Color.DarkGray, 2, Color.Black);
-			//_cellImageMap[ECellImage.PLAYER_1]		= ImageUtil.CreateCircleCellImage(CellSize, Color.White, color1);
-			//_cellImageMap[ECellImage.PLAYER_2]		= ImageUtil.CreateCircleCellImage(CellSize, Color.White, color2);
-			//_cellImageMap[ECellImage.PLAYER_3]		= ImageUtil.CreateCircleCellImage(CellSize, Color.White, color3);
-			//_cellImageMap[ECellImage.PLAYER_4]		= ImageUtil.CreateCircleCellImage(CellSize, Color.White, color4);
 			_cellImageList[(int)ECellImage.FLOOR_NONE] = ImageUtil.CreateRectCellImage(CellSize, Color.White, 2, Color.Black);
 			_cellImageList[(int)ECellImage.FLOOR_1] = ImageUtil.CreateRectCellImage(CellSize, color1, 2, Color.Black);
 			_cellImageList[(int)ECellImage.FLOOR_2] = ImageUtil.CreateRectCellImage(CellSize, color2, 2, Color.Black);
@@ -224,10 +223,10 @@ namespace PaintBot.Core.Forms
 			_cellImageList[(int)ECellImage.START_4] = ImageUtil.CreateMeshRectCellImage(CellSize, color4, 2, Color.Black);
 			_cellImageList[(int)ECellImage.WALL] = ImageUtil.CreateRectCellImage(CellSize, Color.DarkGray, 2, Color.Black);
 			_cellImageList[(int)ECellImage.WIRE_MESH] = ImageUtil.CreateMeshRectCellImage(CellSize, Color.DarkGray, 2, Color.Black);
-			_cellImageList[(int)ECellImage.PLAYER_1] = ImageUtil.CreateCircleCellImage(CellSize, Color.White, color1);
-			_cellImageList[(int)ECellImage.PLAYER_2] = ImageUtil.CreateCircleCellImage(CellSize, Color.White, color2);
-			_cellImageList[(int)ECellImage.PLAYER_3] = ImageUtil.CreateCircleCellImage(CellSize, Color.White, color3);
-			_cellImageList[(int)ECellImage.PLAYER_4] = ImageUtil.CreateCircleCellImage(CellSize, Color.White, color4);
+			_cellImageList[(int)ECellImage.PLAYER_1] = ImageUtil.CreateCircleCellImage(CellSize, color1, Color.Black);
+			_cellImageList[(int)ECellImage.PLAYER_2] = ImageUtil.CreateCircleCellImage(CellSize, color2, Color.Black);
+			_cellImageList[(int)ECellImage.PLAYER_3] = ImageUtil.CreateCircleCellImage(CellSize, color3, Color.Black);
+			_cellImageList[(int)ECellImage.PLAYER_4] = ImageUtil.CreateCircleCellImage(CellSize, color4, Color.Black);
 		}
 
 		/// <summary>
@@ -237,6 +236,68 @@ namespace PaintBot.Core.Forms
 		/// データ更新、およびバックスクリーンの更新を行う
 		/// </remarks>
 		private void OnFrame()
+		{
+			// フレームカウンタが FramePerSecond の倍数の場合
+			if (_frameCount % FramePerSecond == 0)
+			{
+				// 次の処理
+				NextTurn();
+			}
+
+			// バックスクリーンに描画
+			DrawToBackScreen();
+
+			// フレームカウンタを増やす
+			_frameCount += 1;
+		}
+
+		/// <summary>
+		/// 次のターンの処理を行う
+		/// </summary>
+		/// <returns>まだ続く場合 true, それ以外の場合 false</returns>
+		private bool NextTurn()
+		{
+			// 次の処理を行う
+			var hasNext = _game.NextTurn();
+
+			// 終了の場合
+			if (!hasNext)
+			{
+				// ステータスを停止に変更
+				Status = EFormStatus.STOPPED;
+			}
+
+			// Infoテキストを更新する
+			UpdateInfoText();
+
+			// 結果を返す
+			return hasNext;
+		}
+
+		/// <summary>
+		/// Infoテキストを更新する
+		/// </summary>
+		private void UpdateInfoText()
+		{
+			// テキスト
+			var txt = "";
+
+			// Bot 情報
+			txt += $"■ターン数\r\n{_game.TurnCount}\r\n";
+			txt += "\r\n";
+
+			// Bot 情報
+			txt += "■Bot 情報\r\n";
+			_game.Bots.ForEach(b => txt += $"◯{b.BotName}\r\n　Player：{b.Player.Name}\r\n　Position：{_game.Map.GetBotPosition(b)}\r\n");
+
+			// TextBox に反映
+			textBoxInfo.Text = txt;
+		}
+
+		/// <summary>
+		/// バックスクリーンに描画する
+		/// </summary>
+		private void DrawToBackScreen()
 		{
 			// バックスクリーンの Graphics を取得
 			using (var brushBack = new SolidBrush(Color.White))
@@ -262,6 +323,11 @@ namespace PaintBot.Core.Forms
 						var type = map[x, y];
 						// 所有プレイヤー
 						var owner = map.GetOwnerPlayerType(x, y);
+
+						if (type == ECellType.START)
+						{
+							Debug.WriteLine($"({x}, {y}) = {owner}");
+						}
 
 						// セルイメージを取得
 						var cellImage = GetCellImage(type, owner);
@@ -336,7 +402,7 @@ namespace PaintBot.Core.Forms
 					switch (ownerPlayer)
 					{
 						case EPlayerType.NO_PLAYER:
-							cellImageIndex = ECellImage.FLOOR_NONE;
+							cellImageIndex = ECellImage.START_NONE;
 							break;
 						case EPlayerType.PLAYER1:
 							cellImageIndex = ECellImage.START_1;
@@ -474,7 +540,11 @@ namespace PaintBot.Core.Forms
 
 			// ロジックを初期化
 			_game.Init(_botMetaList, players, map);
-			_game.StartGame(100);
+			_game.StartGame(100000);
+
+			// 再描画
+			DrawToBackScreen();
+			Redraw();
 
 			// 時間計測リセット
 			_stopwatch.Reset();
@@ -499,6 +569,12 @@ namespace PaintBot.Core.Forms
 				return;
 			}
 
+			// ステップ実行のため、ここでは何もしない
+			if (_game != null)
+			{
+				return;
+			}
+
 			//Debug.WriteLine($"タイマー：{System.Environment.TickCount}");
 
 			// ストップウォッチを止める
@@ -511,18 +587,56 @@ namespace PaintBot.Core.Forms
 			_stopwatch.Reset();
 			_stopwatch.Start();
 
+			// 再描画フラグ
+			bool redrawFlag = false;
+
 			// フレーム時間を超えている場合
 			while (_timerSpan >= MsPerFrame)
 			{
 				// フレーム処理
 				OnFrame();
 
-				// 再描画
-				Redraw();
+				// 再描画フラグを立てる
+				redrawFlag = true;
 
 				// 時間を減らす
 				_timerSpan -= MsPerFrame;
 			}
+
+			// 再描画が必要なら
+			if (redrawFlag)
+			{
+				// 再描画
+				Redraw();
+			}
+
+		}
+
+		/// <summary>
+		/// 停止ボタン
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void toolStripButtonStop_Click(object sender, EventArgs e)
+		{
+			// TODO
+		}
+
+		/// <summary>
+		/// 次ステップボタン
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void toolStripButtonNextStep_Click(object sender, EventArgs e)
+		{
+			// 次の処理
+			NextTurn();
+
+			// バックスクリーンに描画
+			DrawToBackScreen();
+
+			// 描画
+			Redraw();
 		}
 	}
 }

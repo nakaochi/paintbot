@@ -174,7 +174,7 @@ namespace PaintBot.Core.Logic
 			foreach (var bot in Bots)
 			{
 				// Bot 周辺のマップ情報
-				Map map = null;
+				Map map = new Map(Map);
 
 				// Bot に次の行動を決めてもらう
 				var action = bot.DecideNextAction(map);
@@ -253,13 +253,27 @@ namespace PaintBot.Core.Logic
 					for (int j = i + 1; j < nextInfoList.Count; j++)
 					{
 						// ２つ目
-						var b = nextInfoList[i];
+						var b = nextInfoList[j];
+
+						// ２つの Bot が入れ替わる移動の場合
+						if (a.NextPos == b.CurPos && a.CurPos == b.NextPos)
+						{
+							a.Action.Cancel = true;
+							b.Action.Cancel = true;
+
+							// イベント通知
+							NoticeEvent(EEventType.COLLISION_MOVE, a.Action.Bot, a.NextPos);
+							NoticeEvent(EEventType.COLLISION_MOVE, b.Action.Bot, b.NextPos);
+						}
 
 						// 移動後の位置が一致しない場合
 						if (a.NextPos != b.NextPos)
 						{
+							// 問題なし
 							continue;
 						}
+
+						// 以下、移動後の位置が一致する
 
 						// a が移動でキャンセルされていない場合、キャンセル
 						if (a.Action.ActionType == EActionType.MOVE && !a.Action.Cancel)

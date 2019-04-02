@@ -1,5 +1,6 @@
 ﻿using PaintBot.Core.Forms.Components;
 using PaintBot.Core.Model;
+using PaintBot.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,15 @@ namespace PaintBot.Core.Forms
 		/// </summary>
 		private List<PlayerConfigPanel> _playerConfigPanelList;
 
+		/// <summary>
+		/// プレイヤー数
+		/// </summary>
+		public int PlayerCount { private set; get; }
+
+		/// <summary>
+		/// コンフィグパネルを生成する
+		/// </summary>
+		/// <param name="botMetaList"></param>
 		public FormConfig(List<BotMeta> botMetaList)
 		{
 			InitializeComponent();
@@ -39,17 +49,18 @@ namespace PaintBot.Core.Forms
 			});
 
 			// ２人をチェック
+			PlayerCount = 2;
 			radioButtonPlayerCount2.Checked = true;
 		}
 
 		private void radioButtonPlayerCount_CheckedChanged(object sender, EventArgs e)
 		{
 			// プレイヤー人数を取得
-			var playerCount = int.Parse((string)(sender as RadioButton).Tag);
+			PlayerCount = int.Parse((string)(sender as RadioButton).Tag);
 
 			for (int i = 0; i < _playerConfigPanelList.Count; i ++)
 			{
-				_playerConfigPanelList[i].Visible = (i < playerCount);
+				_playerConfigPanelList[i].Visible = (i < PlayerCount);
 			}
 		}
 
@@ -65,9 +76,12 @@ namespace PaintBot.Core.Forms
 
 				// 表示されているプレイヤー設定パネルのプレイヤー情報を戻り値に追加
 				ret.AddRange(_playerConfigPanelList
-					.Where(p => p.Visible)
+					//.Where(p => p.Visible) // ダイアログを閉じたあと Visible が false に変わっていて正しく判定できない
 					.Select(p => p.GetPlayer())
 				);
+
+				// いらないプレイヤーを削除
+				(4 - PlayerCount).Times(i => ret.RemoveAt(PlayerCount));
 
 				// 結果を返す
 				return ret;

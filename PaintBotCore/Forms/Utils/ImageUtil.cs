@@ -59,7 +59,7 @@ namespace PaintBot.Core.Forms.Utils
 				int margin = 1;
 
 				// リソースを準備
-				using (var brushFill = new HatchBrush(HatchStyle.OutlinedDiamond, colorFill))
+				using (var brushFill = new HatchBrush(HatchStyle.OutlinedDiamond, Color.Black, colorFill))
 				using (var penBorder = new Pen(colorBorder, borderSize))
 				{
 					// 塗りつぶし
@@ -83,9 +83,9 @@ namespace PaintBot.Core.Forms.Utils
 			return CreateCellImage(cellSize, g =>
 			{
 				// マージンサイズ
-				int margin = 4;
+				int margin = 8;
 				// ボーダーサイズ
-				int borderSize = 2;
+				int borderSize = 4;
 
 				// リソースを準備
 				using (var brushFill = new SolidBrush(colorFill))
@@ -94,7 +94,7 @@ namespace PaintBot.Core.Forms.Utils
 					// 塗りつぶし
 					g.FillEllipse(brushFill, margin, margin, cellSize - margin * 2, cellSize - margin * 2);
 					// ボーダー描画
-					g.DrawRectangle(penBorder, margin, margin, cellSize - margin * 2, cellSize - margin * 2);
+					g.DrawEllipse(penBorder, margin, margin, cellSize - margin * 2, cellSize - margin * 2);
 				}
 			});
 		}
